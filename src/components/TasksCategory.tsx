@@ -9,7 +9,11 @@ import {
 
 const categories: string[] = ["All", "Completed", "Uncompleted"];
 
-function TasksCategory() {
+function TasksCategory({
+  taskCategoryHandler,
+}: {
+  taskCategoryHandler: (taskFilter: string) => void;
+}) {
   if (!categories) {
     return (
       <Select defaultValue="all">
@@ -24,8 +28,14 @@ function TasksCategory() {
       </Select>
     );
   }
+
   return (
-    <Select defaultValue={categories[0].toLowerCase()}>
+    <Select
+      defaultValue={categories[0].toLowerCase()}
+      onValueChange={v => {
+        taskCategoryHandler(v);
+      }}
+    >
       <SelectTrigger className="w-45">
         <SelectValue placeholder="Filter tasks by status" />
       </SelectTrigger>
