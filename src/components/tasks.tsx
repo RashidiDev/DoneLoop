@@ -1,8 +1,9 @@
 import { useTaskDB } from "@/context/TaskDBContext";
 import EmptyTasks from "./emptyTasks";
 import TaskComponent from "./task";
+import type { categoriesType } from "@/lib/types";
 
-const Tasks = ({ tasksFilter }: { tasksFilter: string }) => {
+const Tasks = ({ tasksFilter }: { tasksFilter: categoriesType }) => {
   const loading = useTaskDB().loading;
   const tasks = useTaskDB().tasks;
 

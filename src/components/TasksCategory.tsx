@@ -6,34 +6,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const categories: string[] = ["All", "Completed", "Uncompleted"];
+import type { categoriesType } from "@/lib/types";
 
 function TasksCategory({
   taskCategoryHandler,
 }: {
-  taskCategoryHandler: (taskFilter: string) => void;
+  taskCategoryHandler: (taskFilter: categoriesType) => void;
 }) {
-  if (!categories) {
-    return (
-      <Select defaultValue="all">
-        <SelectTrigger className="w-45">
-          <SelectValue placeholder="Filter tasks by status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value="all">All</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    );
-  }
-
   return (
     <Select
-      defaultValue={categories[0].toLowerCase()}
+      defaultValue="all"
       onValueChange={v => {
-        taskCategoryHandler(v);
+        taskCategoryHandler(v as categoriesType);
       }}
     >
       <SelectTrigger className="w-45">
@@ -41,16 +25,9 @@ function TasksCategory({
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {categories.map(c => {
-            if (!c.length) {
-              return;
-            }
-            return (
-              <SelectItem key={c} value={c.toLowerCase()}>
-                {c}
-              </SelectItem>
-            );
-          })}
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="completed">Completed</SelectItem>
+          <SelectItem value="uncompleted">Uncompleted</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

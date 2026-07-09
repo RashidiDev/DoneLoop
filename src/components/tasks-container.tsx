@@ -1,19 +1,14 @@
+import type { categoriesType } from "@/lib/types";
 import AddTasksButton from "./addTasksButton";
 import Tasks from "./tasks";
 import TasksCategory from "./TasksCategory";
 import { useState } from "react";
 
 const TasksContainer = () => {
-  const [taskFilter, setTaskFilter] = useState<string>("All");
+  const [taskFilter, setTaskFilter] = useState<categoriesType>("all");
 
-  const handleTasksCategory = (taskFilter: string) => {
-    if (taskFilter === "completed") {
-      setTaskFilter("completed");
-    } else if (taskFilter === "uncompleted") {
-      setTaskFilter("uncompleted");
-    } else {
-      setTaskFilter("all");
-    }
+  const handleTasksCategory = (taskFilter: categoriesType) => {
+    setTaskFilter(taskFilter);
   };
 
   return (
