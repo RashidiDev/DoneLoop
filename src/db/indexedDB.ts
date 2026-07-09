@@ -1,13 +1,4 @@
-import type { newTask } from "@/context/TaskDBContext";
-
-export interface Task {
-  id: number;
-  name: string;
-  description: string | undefined;
-  completed: boolean;
-  isImportant: boolean;
-  createdAt: number;
-}
+import type { newTask, Task } from "@/lib/types";
 
 const DB_NAME = "TaskManagerDB";
 const DB_VERSION = 1;

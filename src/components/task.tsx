@@ -1,7 +1,8 @@
 import { useTaskDB } from "@/context/TaskDBContext";
 import { Button } from "@/components/ui/button";
-import { type Task } from "@/db/indexedDB";
+
 import { Check, Star, Trash2 } from "lucide-react";
+import type { Task } from "@/lib/types";
 
 interface TaskComponentProps {
   task: Task;

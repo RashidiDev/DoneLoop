@@ -8,27 +8,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { taskDB, type Task } from "@/db/indexedDB";
-
-export type newTask = {
-  name: string;
-  description: string | undefined;
-  completed?: boolean;
-  isImportant?: boolean;
-  createdAt: number;
-};
-
-interface TaskDBContextValue {
-  isReady: boolean;
-  tasks: Task[];
-  loading: boolean;
-  error: Error | null;
-  refreshTasks: () => Promise<void>;
-  addTask: (task: newTask) => Promise<number>;
-  updateTask: (task: Task) => Promise<void>;
-  deleteTask: (id: number) => Promise<void>;
-  getTaskById: (id: number) => Promise<Task | undefined>;
-}
+import { taskDB } from "@/db/indexedDB";
+import type { newTask, Task, TaskDBContextValue } from "@/lib/types";
 
 const TaskDBContext = createContext<TaskDBContextValue | undefined>(undefined);
 
