@@ -39,7 +39,7 @@
     }
   ],
   "start_url": "/index.html",
-  "scope": ".",
+  "scope": "https://task-manager-app-ar.vercel.app/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#fff",
