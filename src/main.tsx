@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TaskDBProvider } from "@/context/TaskDBContext";
+import { registerSW } from "@/utils/swRegister";
+
+registerSW();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
