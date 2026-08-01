@@ -38,8 +38,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
-  "scope": "https://task-manager-app-ar.vercel.app/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#fff",
