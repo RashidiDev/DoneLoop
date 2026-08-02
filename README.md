@@ -1,73 +1,114 @@
-# React + TypeScript + Vite
+# DoneLoop - Offline-First Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, privacy-focused task manager that works completely offline. Built with React 19, TypeScript, Vite, Tailwind CSS v4, and IndexedDB.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Offline-first**: All data stored locally in IndexedDB - works without internet
+- **Task management**: Create, update, delete, mark complete/important
+- **Categories**: View all, completed, or uncompleted tasks
+- **PWA ready**: Installable as a native app on mobile/desktop
+- **No backend**: Zero server dependency, your data stays on your device
+- **Service Worker**: Caches app shell for offline loading
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer     | Technology                          |
+| --------- | ----------------------------------- |
+| Framework | React 19 + TypeScript               |
+| Build     | Vite 8                              |
+| Styling   | Tailwind CSS v4 + shadcn/ui (Radix) |
+| Database  | IndexedDB (via custom wrapper)      |
+| PWA       | Service Worker (Workbox-style)      |
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+
+- pnpm 9+
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm dev
 ```
+
+Opens at `http://localhost:5173`
+
+### Build
+
+```bash
+pnpm build
+```
+
+Outputs to `dist/` - ready for static hosting (Vercel, Netlify, etc.)
+
+### Preview Production Build
+
+```bash
+pnpm preview
+```
+
+### Lint
+
+```bash
+pnpm lint
+```
+
+## Database Schema
+
+**IndexedDB: `TaskManagerDB` (v1)**
+
+| Store   | Key Path             | Fields                                                               |
+| ------- | -------------------- | -------------------------------------------------------------------- |
+| `tasks` | `id` (autoIncrement) | `id`, `name`, `description`, `completed`, `isImportant`, `createdAt` |
+
+All operations are synchronous with UI via React context - no queue, no sync needed.
+
+## PWA / Service Worker
+
+The app registers a Service Worker (`public/sw.js`) that:
+
+- Caches app shell (HTML, CSS, JS, icons, manifest)
+- Serves cached assets offline
+- Handles app updates via `controllerchange` → auto-reload
+
+Manifest at `public/manifest.json` enables "Add to Home Screen".
+
+## Offline Behavior
+
+| Action      | Offline Behavior                   |
+| ----------- | ---------------------------------- |
+| Create task | Written directly to IndexedDB      |
+| Update task | Written directly to IndexedDB      |
+| Delete task | Written directly to IndexedDB      |
+| Reload app  | Loads from IndexedDB               |
+| Go online   | No sync needed - already persisted |
+
+## Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Connect repo to Vercel - auto-detects Vite
+# Build command: pnpm run build
+# Output directory: dist
+```
+
+### Static Hosting (Netlify, Cloudflare Pages, GitHub Pages)
+
+```bash
+pnpm run build
+# Deploy dist/ folder
+```
+
+## License
+
+MIT
